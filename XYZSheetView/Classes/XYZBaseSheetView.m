@@ -84,7 +84,26 @@
 inline CGFloat XYZSafeAreaBottomHeight(void) {
     CGFloat bottom = 0;
     if (@available(iOS 11.0, *)) {
-        bottom = UIApplication.sharedApplication.delegate.window.safeAreaInsets.bottom;
+        UIWindow *window = nil;
+        if (@available(iOS 13.0, *)) {
+            for (UIWindowScene* windowScene in [UIApplication sharedApplication].connectedScenes) {
+                if (windowScene.activationState == UISceneActivationStateForegroundActive) {
+                    window = windowScene.windows.firstObject;
+                }
+            }
+            // If a window has not been returned by now, the first scene's window is returned (regardless of activationState).
+            if (window == nil) {
+                UIWindowScene *windowScene = (UIWindowScene *)[[UIApplication sharedApplication].connectedScenes allObjects].firstObject;
+                window = windowScene.windows.firstObject;
+            }
+        } else {
+    #if TARGET_OS_IOS
+            window = [[[UIApplication sharedApplication] delegate] window];
+    #else
+            window = [UIApplication sharedApplication].keyWindow;
+    #endif
+        }
+        bottom = window.safeAreaInsets.bottom;
     }
     return bottom;
 }
