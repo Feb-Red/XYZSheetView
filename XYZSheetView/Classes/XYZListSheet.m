@@ -167,7 +167,7 @@
 
     cell.line.hidden = indexPath.row == self.actions.count - 1;
     if (self.lineColor) {
-        cell.line.backgroundColor = self.lineColor;
+        cell.line.backgroundColor = self.lineColor.CGColor;
     }
     return cell;
 }
