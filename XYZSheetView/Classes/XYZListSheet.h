@@ -62,7 +62,7 @@ typedef void(^XYZListSheetActionBlock)(void);
 
 @property (nonatomic, assign) UIEdgeInsets separatorInset;
 
-@property (nonatomic, assign) UIColor *lineColor;
+@property (nonatomic, strong) UIColor *lineColor;
 
 /// 更新sheetView, 数据源变化时使用 (if not showing, nothing to do)
 - (void)refreshOprations;
