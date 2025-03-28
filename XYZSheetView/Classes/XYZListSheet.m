@@ -40,6 +40,7 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *descLabel;
 @property (nonatomic, strong) CALayer *line;
+@property (nonatomic, assign) UIEdgeInsets separatorInset;
 @end
 @implementation XYZSheetCell
 {
@@ -73,7 +74,8 @@
     
     CGFloat width = self.contentView.bounds.size.width, height = self.contentView.bounds.size.height;
     CGFloat lineHeight = 1.0 / [UIScreen mainScreen].scale;
-    _line.frame = CGRectMake(0, height - lineHeight, width, lineHeight);
+    
+    _line.frame = CGRectMake(self.separatorInset.left, height - lineHeight, width - self.separatorInset.left - self.separatorInset.right, lineHeight);
     CGFloat offset = 15;
     _stackView.frame = CGRectMake(offset, 2, width - offset * 2, height - 4);
 }
@@ -148,9 +150,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XYZSheetCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(XYZSheetCell.class)];
-
+    cell.separatorInset = self.separatorInset;
     XYZListSheetAction *action = self.actions[indexPath.row];
-    
     cell.titleLabel.text = action.name;
     cell.titleLabel.font = action.nameFont;
     cell.titleLabel.textColor = action.nameFontColor;
@@ -165,6 +166,9 @@
     }
 
     cell.line.hidden = indexPath.row == self.actions.count - 1;
+    if (self.lineColor) {
+        cell.line.backgroundColor = self.lineColor;
+    }
     return cell;
 }
 

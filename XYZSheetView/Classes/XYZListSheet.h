@@ -60,6 +60,10 @@ typedef void(^XYZListSheetActionBlock)(void);
 /// 列表 Cell 的高度 (defult 50)
 @property (nonatomic, assign) CGFloat cellHeight;
 
+@property (nonatomic, assign) UIEdgeInsets separatorInset;
+
+@property (nonatomic, assign) UIColor *lineColor;
+
 /// 更新sheetView, 数据源变化时使用 (if not showing, nothing to do)
 - (void)refreshOprations;
 
